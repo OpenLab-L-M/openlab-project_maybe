@@ -31,5 +31,15 @@ namespace openlab_project.Controllers
             })
             .ToArray();
         }
-    }
+            [HttpGet]
+            [Route("UserData")]
+            public ActionResult<string> GetUserData()
+            {
+                UserEntity userEntity = new UserEntity();
+            userEntity.GUID = 123;
+            userEntity.XP = 69;
+                return Ok(userEntity);
+            }
+
+        }
 }
