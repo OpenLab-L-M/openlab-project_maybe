@@ -13,7 +13,6 @@ import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { DudkoComponent } from './dudko/dudko.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +22,6 @@ import { DudkoComponent } from './dudko/dudko.component';
     CounterComponent,
     FetchDataComponent,
     DashboardComponent,
-    DudkoComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -34,6 +32,7 @@ import { DudkoComponent } from './dudko/dudko.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
+      { path: 'dashboard', component: DashboardComponent },
     ])
   ],
   providers: [
