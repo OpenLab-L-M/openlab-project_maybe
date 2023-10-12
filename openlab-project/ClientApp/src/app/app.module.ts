@@ -21,7 +21,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    DashboardComponent
+    DashboardComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,10 +32,14 @@ import { DashboardComponent } from './dashboard/dashboard.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
+      { path: 'dashboard', component: DashboardComponent, },
     ])
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthorizeInterceptor, multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
