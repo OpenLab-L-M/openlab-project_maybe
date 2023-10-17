@@ -5,19 +5,19 @@
 namespace openlab_project.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class ApplicationUsersMigration : Migration
+    public partial class XpAndGuild : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "GuilD",
+                name: "Guild",
                 table: "AspNetUsers",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<int>(
-                name: "XP",
+                name: "Xp",
                 table: "AspNetUsers",
                 type: "int",
                 nullable: false,
@@ -28,11 +28,11 @@ namespace openlab_project.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "GuilD",
+                name: "Guild",
                 table: "AspNetUsers");
 
             migrationBuilder.DropColumn(
-                name: "XP",
+                name: "Xp",
                 table: "AspNetUsers");
         }
     }

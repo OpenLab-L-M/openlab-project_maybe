@@ -319,7 +319,7 @@ namespace openlab_project.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("GuilD")
+                    b.Property<string>("Guild")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -355,7 +355,7 @@ namespace openlab_project.Data.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int>("XP")
+                    b.Property<int>("Xp")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

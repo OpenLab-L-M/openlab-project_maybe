@@ -1,23 +1,26 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using openlab_project.Data;
 using openlab_project.Models;
+using System.Security.Claims;
 using System.Xml.XPath;
 
 namespace openlab_project.Controllers
 {
-
+    [ApiController]
+    [Route("[controller]")]
     public class UserController : ControllerBase
     {
         private readonly ILogger<UserController> _logger;
-        private readonly ApplicationUser _pDashboard;
-        public UserController(ILogger<UserController> logger, ApplicationUser pDashboard)
+        private readonly ApplicationDbContext _context;
+        public UserController(ILogger<UserController> logger, ApplicationDbContext context)
         {
             _logger = logger;
-            _pDashboard = pDashboard;
+            _context = context;
         }
 
         [HttpGet]
-        public IActionResult GetUser()
+        public ActionResult<UserInfo> GetUser()
         {
             var user = new UserInfo();
             {
@@ -26,5 +29,6 @@ namespace openlab_project.Controllers
             };
             return Ok(user);
         }
+        
     }
 }

@@ -6,16 +6,16 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent {
-  public XpAndGuild: UserInfo;
+  public xpAndGuild!: UserInfo;
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     http.get<UserInfo>(baseUrl + 'user').subscribe(result => {
-      this.XpAndGuild = result;
+      this.xpAndGuild = result;
     }, error => console.error(error));
   }
 }
 
-interface UserInfo {
-  Xp: number;
-  Guild: string;
+export interface UserInfo {
+  xp: number;
+  guild: string;
 }
