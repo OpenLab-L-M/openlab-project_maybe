@@ -22,13 +22,23 @@ namespace openlab_project.Controllers
         [HttpGet]
         public ActionResult<UserInfo> GetUser()
         {
-            var user = new UserInfo();
+            try
             {
-                user.Xp = 1000;
-                user.Guild = "internet warriors";
-            };
-            return Ok(user);
+                var user = _context.ApplicationUsers
+                    .FirstOrDefault();
+
+                if (user == null)
+                {
+                    return NotFound("No user data found.");
+                }
+
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
-        
+
     }
 }
