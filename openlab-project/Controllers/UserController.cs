@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using openlab_project.Data;
 using openlab_project.Models;
 using System.Security.Claims;
@@ -20,24 +21,27 @@ namespace openlab_project.Controllers
         }
 
         [HttpGet]
-        public ActionResult<UserInfo> GetUser()
+        public ActionResult<UserInfo> Get()
         {
-            try
-            {
-                var user = _context.ApplicationUsers
-                    .FirstOrDefault();
 
-                if (user == null)
-                {
-                    return NotFound("No user data found.");
-                }
-
-                return Ok(user);
-            }
-            catch (Exception ex)
+            var myUser = GetCurrentUser();
+            var info = new UserInfo
             {
-                return StatusCode(500, "Internal server error");
-            }
+                Xp = myUser.Xp,
+                Guild = myUser.Guild.GuildName,
+
+
+            };
+            return info;
+        }
+        private Models.ApplicationUser GetCurrentUser()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            Models.ApplicationUser? user = _context.Users
+                .SingleOrDefault(user => user.Id == userId);
+
+            return user!;
         }
 
     }

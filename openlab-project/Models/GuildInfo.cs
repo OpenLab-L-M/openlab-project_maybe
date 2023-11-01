@@ -2,10 +2,11 @@
 
 namespace openlab_project.Models
 {
-    public class Guild
+    public class GuildInfo
     {
         [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string? GuildName { get; set; }
+        public int GuildMembers {  get; set; }
     }
 }

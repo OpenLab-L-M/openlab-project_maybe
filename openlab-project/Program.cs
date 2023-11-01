@@ -41,7 +41,7 @@ app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-
+app.UsePathBase("/api/");
 app.UseAuthentication();
 app.UseIdentityServer();
 app.UseAuthorization();
