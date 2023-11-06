@@ -25,20 +25,21 @@ namespace openlab_project.Controllers
         {
 
             var myUser = GetCurrentUser();
-            var info = new UserInfo
+            var mUserInfo = new UserInfo
             {
                 Xp = myUser.Xp,
-                Guild = myUser.Guild.GuildName,
+                Guild = myUser?.Guild?.GuildName,
 
 
             };
-            return info;
+            return mUserInfo;
         }
         private Models.ApplicationUser GetCurrentUser()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             Models.ApplicationUser? user = _context.Users
+                .Include(user => user.Guild)
                 .SingleOrDefault(user => user.Id == userId);
 
             return user!;

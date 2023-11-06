@@ -2,8 +2,15 @@
 {
     public class GuildInfo
     {
-        public string? Name {  get; set; }
-        public int Id {  get; set; }
-        public int GuildMembers {  get; set; }
+        public int Id { get; set; }
+
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+
+        public int GuildMaxMembers { get; set; }
+
+        public int MembersCount { get; set; }
+
+        public string? GuildInformation { get; set; }
     }
 }

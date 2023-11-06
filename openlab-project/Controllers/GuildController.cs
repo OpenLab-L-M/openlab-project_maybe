@@ -22,9 +22,13 @@ namespace openlab_project.Controllers
 
             return dbGuilds.Select(dbGuilds => new GuildInfo
             {
-                Id = dbGuilds.Id,
                 Name = dbGuilds.Name,
-                GuildMembers = GetguildMembersCount(dbGuilds.Id)
+                Id = dbGuilds.Id,
+                MembersCount = GetguildMembersCount(dbGuilds.Id),
+                GuildMaxMembers = dbGuilds.GuildMaxMembers,
+                Description = dbGuilds.Description,
+                
+
             });
         }
 
