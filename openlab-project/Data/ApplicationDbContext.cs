@@ -16,6 +16,6 @@ namespace openlab_project.Data
 
         public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
-        public virtual DbSet<GuildInfo> Guilds { get; set; } = default;
+        public virtual DbSet<GuildInfo>? Guild { get; set; } = default;
     }
 }

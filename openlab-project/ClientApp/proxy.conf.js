@@ -14,7 +14,8 @@ const PROXY_CONFIG = [
       "/ApplyDatabaseMigrations",
       "/_framework",
       "/user",
-      "/dashboard"
+      "/dashboard",
+      "/guild"
    ],
     proxyTimeout: 10000,
     target: target,

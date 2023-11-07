@@ -28,7 +28,7 @@ namespace openlab_project.Controllers
             var mUserInfo = new UserInfo
             {
                 Xp = myUser.Xp,
-                Guild = myUser?.Guild?.GuildName,
+                Guild = myUser?.GuildInfo?.GuildName,
 
 
             };
@@ -39,7 +39,7 @@ namespace openlab_project.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             Models.ApplicationUser? user = _context.Users
-                .Include(user => user.Guild)
+                .Include(user => user.GuildInfo)
                 .SingleOrDefault(user => user.Id == userId);
 
             return user!;

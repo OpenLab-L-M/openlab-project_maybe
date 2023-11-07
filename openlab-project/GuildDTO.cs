@@ -1,6 +1,6 @@
 ﻿namespace openlab_project
 {
-    public class GuildInfo
+    public class GuildDTO
     {
         public int Id { get; set; }
 

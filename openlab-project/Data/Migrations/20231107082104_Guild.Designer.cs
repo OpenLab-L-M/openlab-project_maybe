@@ -12,7 +12,7 @@ using openlab_project.Data;
 namespace openlab_project.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231104132918_Guild")]
+    [Migration("20231107082104_Guild")]
     partial class Guild
     {
         /// <inheritdoc />
@@ -303,34 +303,6 @@ namespace openlab_project.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("openlab_project.GuildInfo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GuildInformation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("GuildMaxMembers")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MembersCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Guilds");
-                });
-
             modelBuilder.Entity("openlab_project.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -350,7 +322,7 @@ namespace openlab_project.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("GuildId")
+                    b.Property<int?>("GuildInfoId")
                         .HasColumnType("int");
 
                     b.Property<bool>("LockoutEnabled")
@@ -391,7 +363,7 @@ namespace openlab_project.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GuildId");
+                    b.HasIndex("GuildInfoId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -423,7 +395,7 @@ namespace openlab_project.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GuildInfo");
+                    b.ToTable("Guild");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -479,11 +451,11 @@ namespace openlab_project.Data.Migrations
 
             modelBuilder.Entity("openlab_project.Models.ApplicationUser", b =>
                 {
-                    b.HasOne("openlab_project.Models.GuildInfo", "Guild")
+                    b.HasOne("openlab_project.Models.GuildInfo", "GuildInfo")
                         .WithMany("GuildMembers")
-                        .HasForeignKey("GuildId");
+                        .HasForeignKey("GuildInfoId");
 
-                    b.Navigation("Guild");
+                    b.Navigation("GuildInfo");
                 });
 
             modelBuilder.Entity("openlab_project.Models.GuildInfo", b =>

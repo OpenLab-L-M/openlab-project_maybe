@@ -16,13 +16,13 @@ namespace openlab_project.Controllers
             _context = context;
         }
         [HttpGet]
-        public IEnumerable<GuildInfo> GetGuildInformation()
+        public IEnumerable<GuildDTO> GetGuildInformation()
         {
-            IEnumerable<GuildInfo> dbGuilds = _context.Guilds;
+            IEnumerable<GuildInfo> dbGuilds = _context.Guild;
 
-            return dbGuilds.Select(dbGuilds => new GuildInfo
+            return dbGuilds.Select(dbGuilds => new GuildDTO
             {
-                Name = dbGuilds.Name,
+                Name = dbGuilds.GuildName,
                 Id = dbGuilds.Id,
                 MembersCount = GetguildMembersCount(dbGuilds.Id),
                 GuildMaxMembers = dbGuilds.GuildMaxMembers,
@@ -35,9 +35,9 @@ namespace openlab_project.Controllers
 
         private int GetguildMembersCount(int guildId)
         {
-            IQueryable<ApplicationUser> users = _context.Users.Include(applicationUser => applicationUser.Guild).AsNoTracking();
+            IQueryable<ApplicationUser> users = _context.Users.Include(applicationUser => applicationUser.GuildInfo).AsNoTracking();
 
-            return users.Where(u => u.Guild.Id == guildId).Count();
+            return users.Where(u => u.GuildInfo.Id == guildId).Count();
         }
 
     }
