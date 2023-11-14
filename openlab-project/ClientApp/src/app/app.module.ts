@@ -14,6 +14,7 @@ import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { GuildComponent } from './guild/guild.component';
+import { GulidDetailsComponent } from './gulid-details/gulid-details.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { GuildComponent } from './guild/guild.component';
     CounterComponent,
     FetchDataComponent,
     DashboardComponent,
-    GuildComponent
+    GuildComponent,
+    GulidDetailsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -35,7 +37,8 @@ import { GuildComponent } from './guild/guild.component';
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
       { path: 'dashboard', component: DashboardComponent, },
-      { path: 'guild', component: GuildComponent, }
+      { path: 'guild', component: GuildComponent, },
+      { path: 'guild/:id', component: GulidDetailsComponent, }
     ])
   ],
   providers: [

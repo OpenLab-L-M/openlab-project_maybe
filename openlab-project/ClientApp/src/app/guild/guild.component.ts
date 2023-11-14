@@ -45,6 +45,11 @@ export class GuildComponent {
 
     await this.userService.updateGuildInformationNumber(guildId, userId, 1);
   }
+  onDetailsClick(guildId: number) {
+    
+    console.log(`Details button clicked for guild ID: ${guildId}`);
+    
+  }
 }
 
 interface GuildInformation {
