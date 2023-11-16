@@ -15,10 +15,16 @@
           {{ guild.description }}
           <br />
           <br />
-          <button>
-                  class="btn btn-primary" (click)="onDetailsClick(guild.id)">Details
-          </button>
+            <button>
+              <a [title]="guild.name + ' dedscription'"
+                 [routerLink]="['/guild', guild.id]">
+                {{ guild.name }}
+              </a>
+            </button>
+
+            <!-- . . . -->
+
+          </div>
         </div>
       </div>
     </div>
-</div>

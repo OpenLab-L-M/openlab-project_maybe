@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,7 @@ export class UserService {
   styleUrls: ['./guild.component.css']
 })
 
+
 export class GuildComponent {
 
   Name: string = "no data";
@@ -34,21 +36,22 @@ export class GuildComponent {
 
   public GuildData: GuildInformation[] = [];
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, @Inject(UserService) private userService: UserService) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,  // Add Router to constructor parameters
+    @Inject('BASE_URL') baseUrl: string,
+    @Inject(UserService) private userService: UserService
+  ) {
     http.get<GuildInformation[]>(baseUrl + 'guild').subscribe(result => {
       this.GuildData = result;
-
     }, error => console.error(error));
   }
 
   async onJoinClick(guildId: number, userId: number) {
-
     await this.userService.updateGuildInformationNumber(guildId, userId, 1);
-  }
-  onDetailsClick(guildId: number) {
-    
-    console.log(`Details button clicked for guild ID: ${guildId}`);
-    
+
+    // Navigate to GuildDetails after updating information
+    this.router.navigate(['/guild-details', guildId]);
   }
 }
 

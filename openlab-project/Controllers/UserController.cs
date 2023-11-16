@@ -21,11 +21,11 @@ namespace openlab_project.Controllers
         }
 
         [HttpGet]
-        public ActionResult<UserInfo> Get()
+        public ActionResult<UserInfoDTO> Get()
         {
 
             var myUser = GetCurrentUser();
-            var mUserInfo = new UserInfo
+            var mUserInfo = new UserInfoDTO
             {
                 Xp = myUser.Xp,
                 Guild = myUser?.GuildInfo?.GuildName,
