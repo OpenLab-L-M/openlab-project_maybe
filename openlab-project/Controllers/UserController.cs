@@ -45,5 +45,14 @@ namespace openlab_project.Controllers
             return user!;
         }
 
+
+
+        [HttpGet("getAllUsers")]
+        public ActionResult<List<ApplicationUser>> GetInfoAboutUsers()
+        {
+            var users = _context.ApplicationUsers.ToList();
+            return users;
+        }
+
     }
 }

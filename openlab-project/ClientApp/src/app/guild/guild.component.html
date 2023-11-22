@@ -15,7 +15,7 @@
           {{ guild.description }}
           <br />
           <br />
-            <button>
+            <button class="description-btn">
               <a [title]="guild.name + ' dedscription'"
                  [routerLink]="['/guild', guild.id]">
                 {{ guild.name }}
@@ -28,3 +28,10 @@
         </div>
       </div>
     </div>
+
+<div *ngFor="let user of users" >
+  <div>
+    {{user.email}}
+  </div>
+
+</div>
