@@ -1,1 +1,14 @@
-<p>gulid-details works!</p>
+<div *ngIf="guildDetails">
+    <h2>{{ guildDetails.userName }}</h2>
+    <p>{{ guildDetails.description }}</p>
+    <p>Members Count: {{ guildDetails.members.length }}</p>
+
+    <h3>Members:</h3>
+    <ul>
+        <li *ngFor="let member of guildDetails.members">
+            {{ member.userName }} (ID: {{ member.userId }})
+        </li>
+    </ul>
+</div>
+
+<button (click)="navigateTo()">Go to App Module</button>

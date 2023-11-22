@@ -38,7 +38,7 @@ export class GuildComponent {
 
   constructor(
     private http: HttpClient,
-    private router: Router,  // Add Router to constructor parameters
+    private router: Router, 
     @Inject('BASE_URL') baseUrl: string,
     @Inject(UserService) private userService: UserService
   ) {
@@ -50,7 +50,7 @@ export class GuildComponent {
   async onJoinClick(guildId: number, userId: number) {
     await this.userService.updateGuildInformationNumber(guildId, userId, 1);
 
-    // Navigate to GuildDetails after updating information
+
     this.router.navigate(['/guild-details', guildId]);
   }
 }

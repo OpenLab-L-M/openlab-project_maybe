@@ -26,13 +26,9 @@ namespace openlab_project.Controllers
                 Id = dbGuilds.Id,
                 MembersCount = GetguildMembersCount(dbGuilds.Id),
                 GuildMaxMembers = dbGuilds.GuildMaxMembers,
-                Description = dbGuilds.Description,
-                
-
+                Description = dbGuilds.Description,              
             });
         }
-
-
         private int GetguildMembersCount(int guildId)
         {
             IQueryable<ApplicationUser> users = _context.Users.Include(applicationUser => applicationUser.GuildInfo).AsNoTracking();
@@ -40,5 +36,31 @@ namespace openlab_project.Controllers
             return users.Where(u => u.GuildInfo.Id == guildId).Count();
         }
 
+        [HttpGet("{guildId}")]
+        public IActionResult GetGuildDetails(int guildId)
+        {
+            var guild = _context.Guild.Find(guildId);
+
+
+            var guildDetails = new GuildDetailsDTO
+            {
+                Id = guild.Id,
+                UserName = guild.GuildName,
+                Description = guild.Description,
+                /*Members = guild.GuildMembers.Select(member => new UserInfoDTO
+                {
+                    Xp = member.Xp
+                }).ToList(),*/
+            };
+
+            return Ok(guildDetails);
+        }
+
+        private int GetGuildMembersCount(int guildId)
+        {
+            return _context.Users.Count(u => u.GuildInfo.Id == guildId);
+        }
+
     }
 }
+

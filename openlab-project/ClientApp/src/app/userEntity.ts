@@ -1,5 +1,5 @@
 
-export class UserEntity {
+/*export class UserEntity {
   GUID!: number;
   XP!: number;
-}
+}*/
