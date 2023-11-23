@@ -38,7 +38,7 @@ import { GulidDetailsComponent } from './gulid-details/gulid-details.component';
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
       { path: 'dashboard', component: DashboardComponent, },
       { path: 'guild', component: GuildComponent, },
-      { path: 'guild/:id', component: GulidDetailsComponent, }
+      { path: 'guild/:guildId', component: GulidDetailsComponent, }
     ])
   ],
   providers: [

@@ -36,7 +36,7 @@ namespace openlab_project.Controllers
             return users.Where(u => u.GuildInfo.Id == guildId).Count();
         }
 
-        [HttpGet("{guildId}")]
+        [HttpGet("{guildId:int}")]
         public IActionResult GetGuildDetails(int guildId)
         {
             var guild = _context.Guild.Find(guildId);
@@ -47,10 +47,11 @@ namespace openlab_project.Controllers
                 Id = guild.Id,
                 UserName = guild.GuildName,
                 Description = guild.Description,
-                /*Members = guild.GuildMembers.Select(member => new UserInfoDTO
+                Members = guild.GuildMembers.Select(member => new UserInfoDTO
                 {
+                    UserName = member.UserName,
                     Xp = member.Xp
-                }).ToList(),*/
+                }).ToList(),
             };
 
             return Ok(guildDetails);
