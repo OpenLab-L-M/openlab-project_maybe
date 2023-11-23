@@ -11,10 +11,8 @@ namespace openlab_project.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public GuildController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        public GuildController(ApplicationDbContext context) => _context = context;
+
         [HttpGet]
         public IEnumerable<GuildDTO> GetGuildInformation()
         {
@@ -24,44 +22,55 @@ namespace openlab_project.Controllers
             {
                 Name = dbGuilds.GuildName,
                 Id = dbGuilds.Id,
-                MembersCount = GetguildMembersCount(dbGuilds.Id),
+                MembersCount = GetGuildMembersCount(dbGuilds.Id),
                 GuildMaxMembers = dbGuilds.GuildMaxMembers,
                 Description = dbGuilds.Description,              
             });
-        }
-        private int GetguildMembersCount(int guildId)
-        {
-            IQueryable<ApplicationUser> users = _context.Users.Include(applicationUser => applicationUser.GuildInfo).AsNoTracking();
-
-            return users.Where(u => u.GuildInfo.Id == guildId).Count();
         }
 
         [HttpGet("{guildId:int}")]
         public IActionResult GetGuildDetails(int guildId)
         {
-            var guild = _context.Guild.Find(guildId);
+            var guild = _context.Guild.FirstOrDefault(guildInfo => guildInfo.Id == guildId);
 
+            if (guild == null)
+            {
+                return NotFound($"guild with id: {guildId} not found");
+            }
+
+            var guildMembers = GetGuildMembers(guildId);
 
             var guildDetails = new GuildDetailsDTO
             {
                 Id = guild.Id,
-                UserName = guild.GuildName,
+                GuildName = guild.GuildName,
                 Description = guild.Description,
-                Members = guild.GuildMembers.Select(member => new UserInfoDTO
+                Members = guildMembers.Select(member => new UserInfoDTO
                 {
+                    UserId = member.Id,
                     UserName = member.UserName,
-                    Xp = member.Xp
+                    Xp = member.Xp,
                 }).ToList(),
             };
 
             return Ok(guildDetails);
         }
 
-        private int GetGuildMembersCount(int guildId)
+        private IEnumerable<ApplicationUser> GetGuildMembers(int dbGuildId)
         {
-            return _context.Users.Count(u => u.GuildInfo.Id == guildId);
+            IEnumerable<ApplicationUser> users = _context.Users.Include(applicationUser => applicationUser.GuildInfo);
+
+            return users
+                .Where(applicationUser => applicationUser.GuildInfo != null && applicationUser.GuildInfo.Id == dbGuildId)
+                .ToList();
         }
 
+        private int GetGuildMembersCount(int guildId)
+        {
+            IQueryable<ApplicationUser> users = _context.Users.Include(applicationUser => applicationUser.GuildInfo).AsNoTracking();
+
+            return users.Count(u => u.GuildInfo.Id == guildId);
+        }
     }
 }
 

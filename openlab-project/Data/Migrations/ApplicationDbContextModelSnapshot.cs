@@ -351,7 +351,7 @@ namespace openlab_project.Data.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("GuildName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 

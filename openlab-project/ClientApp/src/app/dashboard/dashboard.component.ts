@@ -16,6 +16,8 @@ export class DashboardComponent {
 }
 
 export interface UserInfo {
+  userId: string;
+  userName: string;
   xp: number;
   guild: string;
 }

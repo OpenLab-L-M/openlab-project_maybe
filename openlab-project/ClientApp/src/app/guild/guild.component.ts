@@ -25,8 +25,6 @@ export class UserService {
   templateUrl: './guild.component.html',
   styleUrls: ['./guild.component.css']
 })
-
-
 export class GuildComponent {
 
   Name: string = "no data";
@@ -38,10 +36,9 @@ export class GuildComponent {
 
   constructor(
     private http: HttpClient,
-    private router: Router, 
+    private router: Router,
     @Inject('BASE_URL') baseUrl: string,
-    @Inject(UserService) private userService: UserService
-  ) {
+    @Inject(UserService) private userService: UserService) {
     http.get<GuildInformation[]>(baseUrl + 'guild').subscribe(result => {
       this.GuildData = result;
     }, error => console.error(error));

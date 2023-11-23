@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using openlab_project.Data;
 using openlab_project.Models;
 using System.Security.Claims;
-using System.Xml.XPath;
 
 namespace openlab_project.Controllers
 {
@@ -23,27 +21,26 @@ namespace openlab_project.Controllers
         [HttpGet]
         public ActionResult<UserInfoDTO> Get()
         {
-
             var myUser = GetCurrentUser();
             var mUserInfo = new UserInfoDTO
             {
+                UserId = myUser.Id,
+                UserName = myUser.UserName,
                 Xp = myUser.Xp,
-                Guild = myUser?.GuildInfo?.GuildName,
-
-
+                Guild = myUser?.GuildInfo.GuildName,
             };
+
             return mUserInfo;
         }
-        private Models.ApplicationUser GetCurrentUser()
+        private ApplicationUser GetCurrentUser()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            Models.ApplicationUser? user = _context.Users
+            ApplicationUser? user = _context.Users
                 .Include(user => user.GuildInfo)
                 .SingleOrDefault(user => user.Id == userId);
 
             return user!;
         }
-
     }
 }

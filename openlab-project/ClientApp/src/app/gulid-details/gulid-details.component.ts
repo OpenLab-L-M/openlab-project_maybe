@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GuildService } from './guild.service'; 
+import { UserInfo } from '../dashboard/dashboard.component';
 
 @Component({
   selector: 'app-gulid-details',
@@ -17,7 +18,7 @@ export class GulidDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      const idParam = params.get('id');
+      const idParam = params.get('guildId');
 
       if (idParam !== null) {
         this.guildId = +idParam;
@@ -44,8 +45,10 @@ export class GulidDetailsComponent implements OnInit {
   }
   
 }
-interface GuildDetailsDTO {
+
+export interface GuildDetailsDTO {
   id: number;
-  userName: string;
+  guildName: string;
   description: string;
+  members: UserInfo[];
 }
