@@ -1,0 +1,14 @@
+.details {
+  background-color: dodgerblue;
+  border-block-color: dodgerblue;
+  border-radius: 10px;
+
+}
+
+  .details a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    
+  }
+
