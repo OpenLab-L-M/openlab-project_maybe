@@ -10,13 +10,9 @@ namespace openlab_project.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly ILogger<UserController> _logger;
         private readonly ApplicationDbContext _context;
-        public UserController(ILogger<UserController> logger, ApplicationDbContext context)
-        {
-            _logger = logger;
-            _context = context;
-        }
+
+        public UserController(ApplicationDbContext context) => _context = context;
 
         [HttpGet]
         public ActionResult<UserInfoDTO> Get()
@@ -32,6 +28,7 @@ namespace openlab_project.Controllers
 
             return mUserInfo;
         }
+
         private ApplicationUser GetCurrentUser()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

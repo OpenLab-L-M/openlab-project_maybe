@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using openlab_project.Data;
 using openlab_project.Models;
+using System.Security.Claims;
 
 namespace openlab_project.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class GuildController : Controller
@@ -24,7 +27,7 @@ namespace openlab_project.Controllers
                 Id = dbGuilds.Id,
                 MembersCount = GetGuildMembers(dbGuilds.Id).Count(),
                 GuildMaxMembers = dbGuilds.GuildMaxMembers,
-                Description = dbGuilds.Description,              
+                Description = dbGuilds.Description,
             });
         }
 
@@ -39,21 +42,58 @@ namespace openlab_project.Controllers
             }
 
             var guildMembers = GetGuildMembers(guildId);
-
-            var guildDetails = new GuildDetailsDTO
-            {
-                Id = guild.Id,
-                GuildName = guild.GuildName,
-                Description = guild.Description,
-                Members = guildMembers.Select(member => new UserInfoDTO
-                {
-                    UserId = member.Id,
-                    UserName = member.UserName,
-                    Xp = member.Xp,
-                }).ToList(),
-            };
+            var guildDetails = CreateGuildDetailsDTO(guild);
 
             return Ok(guildDetails);
+        }
+
+        [HttpPost("join")]
+        public ActionResult<GuildDetailsDTO> JoinGuild([FromBody] int guildIdToJoin)
+        {
+            try
+            {
+                var user = GetCurrentUser();
+
+                GuildInfo? guildToJoin = _context.Guild.FirstOrDefault(g => g.Id == guildIdToJoin);
+
+                if (user.GuildInfo == null)
+                {
+                    user.GuildInfo = guildToJoin;
+                    _context.SaveChanges();
+
+                    var guildDetailsDTO = CreateGuildDetailsDTO(guildToJoin);
+
+                    return Ok(guildDetailsDTO);
+                }
+                else
+                {
+                    return BadRequest(new { Message = "User is already a member of a guild." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
+            }
+        }
+
+        [HttpGet("leave")]
+        public ActionResult<GuildDetailsDTO> LeaveGuild()
+        {
+            try
+            {
+                var user = GetCurrentUser();
+
+                var guildDetails = CreateGuildDetailsDTO(user.GuildInfo);
+
+                user.GuildInfo = null;
+                _context.SaveChanges();
+
+                return Ok(guildDetails);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
+            }
         }
 
         private IEnumerable<ApplicationUser> GetGuildMembers(int dbGuildId)
@@ -64,6 +104,32 @@ namespace openlab_project.Controllers
                 .Where(applicationUser => applicationUser.GuildInfo != null && applicationUser.GuildInfo.Id == dbGuildId)
                 .ToList();
         }
+
+        private ApplicationUser GetCurrentUser()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            ApplicationUser? user = _context.Users
+                .Include(user => user.GuildInfo)
+                .SingleOrDefault(user => user.Id == userId);
+
+            return user!;
+        }
+
+        private static GuildDetailsDTO CreateGuildDetailsDTO(GuildInfo guildInfo)
+        {
+            return new GuildDetailsDTO
+            {
+                Id = guildInfo.Id,
+                GuildName = guildInfo.GuildName,
+                Description = guildInfo.Description,
+                Members = guildInfo.GuildMembers.Select(member => new UserInfoDTO
+                {
+                    UserId = member.Id,
+                    UserName = member.UserName,
+                    Xp = member.Xp,
+                }).ToList(),
+            };
+        }
     }
 }
-

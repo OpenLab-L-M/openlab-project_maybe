@@ -10,7 +10,7 @@ namespace openlab_project.Models
         public ICollection<ApplicationUser>? GuildMembers { get; } = new List<ApplicationUser>();
         public int GuildMaxMembers { get; set; }
         public string? Description { get; set; }
-        
+
 
     }
 }

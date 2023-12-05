@@ -1,8 +1,7 @@
-
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { GuildService } from './guild.service'; 
-import { UserInfo } from '../dashboard/dashboard.component';
+import { GuildService } from './guild.service';
+
 
 @Component({
   selector: 'app-gulid-details',
@@ -10,9 +9,10 @@ import { UserInfo } from '../dashboard/dashboard.component';
   styleUrls: ['./gulid-details.component.css']
 })
 export class GulidDetailsComponent implements OnInit {
-  guildId: number | null = null;
+  guildId!: number;
 
   guildDetails!: GuildDetailsDTO | null;
+  userInfo!: UserInfoDTO;
 
   constructor(private router: Router, private route: ActivatedRoute, private guildService: GuildService) { }
 
@@ -39,16 +39,50 @@ export class GulidDetailsComponent implements OnInit {
       }
     );
   }
+  joinGuild() {
+    //if (this.userInfo.userId !== undefined) {
+    this.guildService.joinGuild(this.guildId)
+      .subscribe(
+        response => {
+          console.log(response);
+          this.loadGuildDetails();
+        },
+        error => {
+          console.error('Error joining guild', error);
+        }
+    );
+    //}
+  }
+
+  leaveGuild() {
+      this.guildService.leaveGuild().subscribe(
+        response => {
+          console.log(response);
+          this.loadGuildDetails();
+        },
+        error => {
+          console.error('Error leaving guild', error);
+        }
+      );
+  }
 
   navigateTo() {
     this.router.navigate(['/app.module']);
   }
-  
+
 }
 
 export interface GuildDetailsDTO {
   id: number;
   guildName: string;
   description: string;
-  members: UserInfo[];
+  members: UserInfoDTO[];
 }
+export interface UserInfoDTO {
+  userId: string,
+  guildId: number,
+  userName: string
+}
+
+
+

@@ -351,7 +351,7 @@ namespace openlab_project.Data.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<string>("GuildName")
+                    b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -392,7 +392,7 @@ namespace openlab_project.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Guild");
+                    b.ToTable("Guild", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
