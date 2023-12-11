@@ -13,3 +13,10 @@ button {
   button a:hover {
       color:white;
   }
+
+  .join{
+      background-color:chartreuse;
+  }
+  .leave{
+      background-color:red;
+  }
