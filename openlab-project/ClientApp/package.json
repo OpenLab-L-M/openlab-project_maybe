@@ -12,7 +12,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "generate-dash": "ng g c dashboard --module=app.module.ts",
-    "generate-guilds": "ng g c gulid-details --module=app.module.ts"
+    "generate-guilds": "ng g c gulid-details --module=app.module.ts",
+    "update": "ng update @angular/core@16 @angular/cli@16"
   },
   "private": true,
   "dependencies": {
